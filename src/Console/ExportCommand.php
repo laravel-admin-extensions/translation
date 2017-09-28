@@ -46,7 +46,7 @@ class ExportCommand extends Command
         if ($group = $this->argument('group')) {
             $this->manager->exportTranslations($group);
         } else {
-             $this->manager->exportAllTranslations();
+            $this->manager->exportAllTranslations();
         }
     }
 }

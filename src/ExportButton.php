@@ -17,7 +17,7 @@ class ExportButton implements Renderable
 
     protected function setupScript()
     {
-        $script = <<<SCRIPT
+        $script = <<<'SCRIPT'
 
 $('._export').click(function () {
     $.ajax({

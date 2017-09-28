@@ -40,7 +40,7 @@ class Translation extends Extension
             $locale = config('app.locale');
         }
 
-        $langPath = resource_path('lang') . '/' . $locale;
+        $langPath = resource_path('lang').'/'.$locale;
 
         $counter = 0;
 
@@ -95,7 +95,7 @@ class Translation extends Extension
     {
         $groups = TranslationModel::select(DB::raw('DISTINCT `group`'))->get();
 
-        foreach($groups as $group){
+        foreach ($groups as $group) {
             $this->exportTranslations($group->group);
         }
     }
@@ -106,16 +106,15 @@ class Translation extends Extension
 
         $tree = [];
 
-        foreach($translations as $translation){
+        foreach ($translations as $translation) {
             array_set($tree[$translation->locale][$translation->group], $translation->key, $translation->value);
         }
 
         foreach ($tree as $locale => $groups) {
-
             if (isset($groups[$group])) {
                 $translations = $groups[$group];
-                $path = resource_path('lang/' . $locale . '/' . $group . '.php');
-                $output = "<?php\n\nreturn " . var_export($translations, true) . ";\n";
+                $path = resource_path('lang/'.$locale.'/'.$group.'.php');
+                $output = "<?php\n\nreturn ".var_export($translations, true).";\n";
                 app('files')->put($path, $output);
             }
         }
@@ -132,7 +131,6 @@ class Translation extends Extension
     {
         /* @var \Illuminate\Routing\Router $router */
         Route::group(['prefix' => config('admin.route.prefix')], function ($router) {
-
             $attributes = array_merge([
                 'middleware' => config('admin.route.middleware'),
             ], static::config('route', []));
@@ -142,7 +140,6 @@ class Translation extends Extension
                 /* @var \Illuminate\Routing\Router $router */
                 $router->resource('translations', 'Encore\Admin\Translation\TranslationController');
             });
-
         });
     }
 

@@ -45,6 +45,6 @@ class ResetCommand extends Command
     {
         $this->manager->resetTranslations($this->argument('locale'));
 
-        $this->info("All translations are deleted");
+        $this->info('All translations are deleted');
     }
 }
