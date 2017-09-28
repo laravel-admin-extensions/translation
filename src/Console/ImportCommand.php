@@ -45,6 +45,6 @@ class ImportCommand extends Command
     {
         $counter = $this->manager->importTranslations($this->argument('locale'), $this->option('force'));
 
-        $this->info('Done importing, processed '.$counter. ' items!');
+        $this->info('Done importing, processed '.$counter.' items!');
     }
 }

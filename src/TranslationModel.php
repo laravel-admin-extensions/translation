@@ -31,11 +31,9 @@ class TranslationModel extends Model
         parent::boot();
 
         static::updating(function (Model $model) {
-
             if ($model->attributes['value'] != $model->original['value']) {
                 $model->status = static::STATUS_CHANGED;
             }
-
         });
     }
 }

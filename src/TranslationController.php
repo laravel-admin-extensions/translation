@@ -42,12 +42,12 @@ class TranslationController
      * Edit interface.
      *
      * @param $id
+     *
      * @return Content
      */
     public function edit($id)
     {
         return Admin::content(function (Content $content) use ($id) {
-
             $content->header('Edit translations');
 
             list($group, $key) = explode('.', $id);
@@ -67,8 +67,7 @@ class TranslationController
         $translations = TranslationModel::where(compact('group', 'key'))->get();
 
         foreach ($request->input('values') as $id => $item) {
-
-            if (is_integer($id)) {
+            if (is_int($id)) {
                 $model = $translations->find($id);
             } else {
                 $model = new TranslationModel();
@@ -86,7 +85,7 @@ class TranslationController
             }
 
             $model->locale = $item['locale'];
-            $model->value  = $item['value'];
+            $model->value = $item['value'];
 
             $model->save();
         }
@@ -104,7 +103,6 @@ class TranslationController
     public function create()
     {
         return Admin::content(function (Content $content) {
-
             $content->header('Create new translation');
 
             $form = new \Encore\Admin\Widgets\Form(compact('group', 'key'));
@@ -115,13 +113,13 @@ class TranslationController
             $form->divider();
 
             $form->hasMany('locales', function (Form\NestedForm $form) {
-                $form->select("locale", 'Locale')->options($this->getLocaleOptions());
-                $form->textarea("value", 'Text');
+                $form->select('locale', 'Locale')->options($this->getLocaleOptions());
+                $form->textarea('value', 'Text');
             });
-            
+
             $form->action(route('translations.store'));
 
-            $content->body(new Box("", $form));
+            $content->body(new Box('', $form));
         });
     }
 
@@ -146,7 +144,6 @@ class TranslationController
     public function grid()
     {
         return Admin::grid(TranslationModel::class, function (Grid $grid) {
-
             $grid->model()->groupBy(['group', 'key'])->select(['id', 'group', 'key', DB::raw('GROUP_CONCAT(status SEPARATOR \',\') as status'), DB::raw('GROUP_CONCAT(DISTINCT CONCAT(locale,\'###\',value) ORDER BY locale ASC SEPARATOR \'|||\') as value'), 'created_at', 'updated_at']);
 
             $grid->column('usage')->display(function () {
@@ -154,22 +151,20 @@ class TranslationController
             });
 
             $grid->value('Locale : Text')->display(function ($value) {
-
                 $html = '<dl class="dl-horizontal" style="margin: 0px;">';
 
                 foreach (explode('|||', $value) as $value) {
                     list($locale, $value) = explode('###', $value);
-                    $html .=  "<dt style='width: 45px;'>$locale:</dt><dd style='margin-left: 50px;margin-bottom: 5px;'><em>$value</em></dd>";
+                    $html .= "<dt style='width: 45px;'>$locale:</dt><dd style='margin-left: 50px;margin-bottom: 5px;'><em>$value</em></dd>";
                 }
 
-                return $html . '</dl>';
+                return $html.'</dl>';
             });
 
             $grid->group();
             $grid->key();
 
             $grid->status()->display(function ($status) {
-
                 $status = explode(',', $status);
 
                 $changed = in_array(TranslationModel::STATUS_CHANGED, $status);
@@ -181,7 +176,6 @@ class TranslationController
             $grid->updated_at();
 
             $grid->filter(function (Grid\Filter $filter) {
-
                 $filter->disableIdFilter();
 
                 $filter->equal('group')->select($this->getGroupOptions());
@@ -210,7 +204,6 @@ class TranslationController
     protected function form()
     {
         return Admin::form(TranslationModel::class, function (Form $form) {
-
             $form->display('id', 'ID');
 
             $form->text('group');
