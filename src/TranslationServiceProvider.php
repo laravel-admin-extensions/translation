@@ -13,6 +13,8 @@ class TranslationServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-admin-translations');
 
+        Translation::boot();
+
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
