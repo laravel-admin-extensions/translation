@@ -148,7 +148,7 @@ class Translation extends Extension
      */
     public static function import()
     {
-        parent::createMenu('Translations', 'translations', 'fa-lang');
+        parent::createMenu('Translations', 'translations', 'fa-language');
 
         parent::createPermission('Translations', 'ext.translations', 'translations*');
     }

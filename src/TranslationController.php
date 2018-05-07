@@ -144,7 +144,7 @@ class TranslationController
     public function grid()
     {
         return Admin::grid(TranslationModel::class, function (Grid $grid) {
-            $grid->model()->groupBy(['group', 'key'])->select(['id', 'group', 'key', DB::raw('GROUP_CONCAT(status SEPARATOR \',\') as status'), DB::raw('GROUP_CONCAT(DISTINCT CONCAT(locale,\'###\',value) ORDER BY locale ASC SEPARATOR \'|||\') as value'), 'created_at', 'updated_at']);
+            $grid->model()->groupBy(['group', 'key', 'id'])->select(['id', 'group', 'key', DB::raw('GROUP_CONCAT(status SEPARATOR \',\') as status'), DB::raw('GROUP_CONCAT(DISTINCT CONCAT(locale,\'###\',value) ORDER BY locale ASC SEPARATOR \'|||\') as value'), 'created_at', 'updated_at']);
 
             $grid->column('usage')->display(function () {
                 return "<code>trans('{$this->group}.{$this->key}')</code>";
